@@ -2,11 +2,14 @@ FROM node:lts-alpine3.11
 
 MAINTAINER  rooqs rooqs@gmail.com
 
-#更新npm(淘宝源)
-RUN npm config set registry https://registry.npm.taobao.org
+RUN  sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories \
+    && apk update  \
+    && apk add  rsync
 
-#全局安装pm2、typescript和ts-node
-RUN npm install pm2 typescript ts-node -g
+RUN npm config set registry https://registry.npm.taobao.org \
+    &&  npm install pm2 typescript ts-node -g
+
+
 
 
 
